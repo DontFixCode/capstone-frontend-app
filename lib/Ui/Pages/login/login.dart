@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'forgot_password.dart';
+import '../main_page.dart';
 import 'signup.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,21 +12,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
   bool _rememberId = false;
   bool _hidePassword = true;
 
-  void _showComingSoon(String feature) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text('$feature 기능은 준비 중이에요.')));
-  }
-
   void _login() {
-    if (!_formKey.currentState!.validate()) return;
     FocusScope.of(context).unfocus();
-    // Connect authentication and persist the ID only when _rememberId is true.
-    _showComingSoon('로그인');
+    // ponytail: 프론트 개발용 진입. 서버 연동 시 인증 성공 후 이동하도록 교체한다.
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(builder: (_) => const MainPage()),
+    );
   }
 
   @override
@@ -80,7 +75,6 @@ class _LoginPageState extends State<LoginPage> {
                         child: Padding(
                           padding: const EdgeInsets.all(24),
                           child: Form(
-                            key: _formKey,
                             child: AutofillGroup(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -101,10 +95,6 @@ class _LoginPageState extends State<LoginPage> {
                                     ],
                                     textInputAction: TextInputAction.next,
                                     autocorrect: false,
-                                    validator: (value) =>
-                                        value == null || value.trim().isEmpty
-                                        ? '아이디를 입력해주세요.'
-                                        : null,
                                   ),
                                   const SizedBox(height: 20),
                                   TextFormField(
@@ -133,10 +123,6 @@ class _LoginPageState extends State<LoginPage> {
                                     autocorrect: false,
                                     enableSuggestions: false,
                                     onFieldSubmitted: (_) => _login(),
-                                    validator: (value) =>
-                                        value == null || value.isEmpty
-                                        ? '비밀번호를 입력해주세요.'
-                                        : null,
                                   ),
                                   const SizedBox(height: 12),
                                   Wrap(
@@ -194,6 +180,14 @@ class _LoginPageState extends State<LoginPage> {
                                           ),
                                       child: const Text('회원가입'),
                                     ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () => Navigator.of(context).push(
+                                      MaterialPageRoute<void>(
+                                        builder: (_) => const MainPage(),
+                                      ),
+                                    ),
+                                    child: const Text('둘러보기'),
                                   ),
                                 ],
                               ),

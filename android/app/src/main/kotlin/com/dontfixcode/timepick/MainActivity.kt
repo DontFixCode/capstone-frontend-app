@@ -1,4 +1,4 @@
-package com.example.time_pick
+package com.dontfixcode.timepick
 
 import io.flutter.embedding.android.FlutterActivity
 

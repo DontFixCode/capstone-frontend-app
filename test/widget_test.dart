@@ -3,8 +3,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:time_pick/Ui/Pages/splash.dart';
-import 'package:time_pick/Ui/Pages/login.dart';
-import 'package:time_pick/Ui/Pages/forgot_password.dart';
+import 'package:time_pick/Ui/Pages/login/login.dart';
+import 'package:time_pick/Ui/Pages/main_page.dart';
+import 'package:time_pick/Ui/Pages/login/forgot_password.dart';
 import 'package:time_pick/Ui/theme/app_theme.dart';
 import 'package:time_pick/main.dart';
 
@@ -87,60 +88,74 @@ void main() {
     );
     expect(find.text('사용자 중심 예약 플랫폼'), findsOneWidget);
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
-    await tester.pump(const Duration(seconds: 2));
+    await tester.pump(const Duration(seconds: 5));
     await tester.pumpAndSettle();
     expect(find.byType(LoginPage), findsOneWidget);
     expect(find.byType(SplashPage), findsNothing);
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Login validates input and supports password and ID controls', (
-    tester,
-  ) async {
-    tester.view.physicalSize = const Size(320, 568);
-    tester.view.devicePixelRatio = 1;
-    addTearDown(tester.view.resetPhysicalSize);
-    addTearDown(tester.view.resetDevicePixelRatio);
-    addTearDown(tester.view.resetViewInsets);
+  testWidgets('Login button opens main with empty credentials', (tester) async {
     await tester.pumpWidget(
       MaterialApp(theme: AppTheme.light, home: const LoginPage()),
     );
-
     final loginButton = find.widgetWithText(FilledButton, '로그인');
     await tester.ensureVisible(loginButton);
+    await tester.pumpAndSettle();
     await tester.tap(loginButton);
     await tester.pumpAndSettle();
-    expect(find.text('아이디를 입력해주세요.'), findsOneWidget);
-    expect(find.text('비밀번호를 입력해주세요.'), findsOneWidget);
 
-    final fields = find.byType(TextFormField);
-    await tester.enterText(fields.first, 'timepick');
-    await tester.enterText(fields.last, 'example-password');
+    expect(find.byType(MainPage), findsOneWidget);
+    expect(find.byType(LoginPage), findsNothing);
     expect(
-      tester.widget<TextField>(find.byType(TextField).last).obscureText,
-      isTrue,
-    );
-    await tester.ensureVisible(find.byTooltip('비밀번호 표시'));
-    await tester.tap(find.byTooltip('비밀번호 표시'));
-    await tester.pump();
-    expect(
-      tester.widget<TextField>(find.byType(TextField).last).obscureText,
+      Navigator.of(tester.element(find.byType(MainPage))).canPop(),
       isFalse,
     );
-
-    await tester.ensureVisible(find.byType(Checkbox));
-    await tester.tap(find.byType(Checkbox));
-    await tester.pump();
-    expect(tester.widget<Checkbox>(find.byType(Checkbox)).value, isTrue);
-
-    tester.view.viewInsets = const FakeViewPadding(bottom: 280);
-    await tester.pump();
-    await tester.ensureVisible(loginButton);
-    await tester.tap(loginButton);
-    await tester.pumpAndSettle();
-    expect(find.text('아이디를 입력해주세요.'), findsNothing);
-    expect(find.text('비밀번호를 입력해주세요.'), findsNothing);
-    expect(find.text('로그인 기능은 준비 중이에요.'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets(
+    'Login accepts arbitrary credentials through keyboard submission',
+    (tester) async {
+      tester.view.physicalSize = const Size(320, 568);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.resetPhysicalSize);
+      addTearDown(tester.view.resetDevicePixelRatio);
+      addTearDown(tester.view.resetViewInsets);
+      await tester.pumpWidget(
+        MaterialApp(theme: AppTheme.light, home: const LoginPage()),
+      );
+
+      final fields = find.byType(TextFormField);
+      await tester.enterText(fields.first, 'timepick');
+      await tester.enterText(fields.last, 'example-password');
+      expect(
+        tester.widget<TextField>(find.byType(TextField).last).obscureText,
+        isTrue,
+      );
+      await tester.ensureVisible(find.byTooltip('비밀번호 표시'));
+      await tester.tap(find.byTooltip('비밀번호 표시'));
+      await tester.pump();
+      expect(
+        tester.widget<TextField>(find.byType(TextField).last).obscureText,
+        isFalse,
+      );
+
+      await tester.ensureVisible(find.byType(Checkbox));
+      await tester.tap(find.byType(Checkbox));
+      await tester.pump();
+      expect(tester.widget<Checkbox>(find.byType(Checkbox)).value, isTrue);
+
+      tester.view.viewInsets = const FakeViewPadding(bottom: 280);
+      await tester.pump();
+      await tester.showKeyboard(fields.last);
+      await tester.testTextInput.receiveAction(TextInputAction.done);
+      await tester.pumpAndSettle();
+      expect(find.text('아이디를 입력해주세요.'), findsNothing);
+      expect(find.text('비밀번호를 입력해주세요.'), findsNothing);
+      expect(find.byType(MainPage), findsOneWidget);
+      expect(find.byType(LoginPage), findsNothing);
+      expect(tester.takeException(), isNull);
+    },
+  );
 }

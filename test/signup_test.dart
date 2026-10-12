@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:time_pick/Ui/Pages/login.dart';
-import 'package:time_pick/Ui/Pages/signup.dart';
+import 'package:time_pick/Ui/Pages/login/login.dart';
+import 'package:time_pick/Ui/Pages/login/signup.dart';
 import 'package:time_pick/Ui/theme/app_theme.dart';
 
 Future<void> tapVisible(WidgetTester tester, Finder finder) async {
