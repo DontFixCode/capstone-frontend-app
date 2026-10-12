@@ -34,8 +34,8 @@ class SearchResults extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
-                color: AppTheme.secondary,
-                borderRadius: BorderRadius.circular(20),
+                color: AppTheme.actionSurface,
+                borderRadius: AppTheme.corners,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +68,7 @@ class SearchResults extends StatelessWidget {
             const SizedBox(height: 6),
             const Text(
               '화면 미리보기용 정보입니다. 실제 예약 가능 시간과 가격은 아직 제공되지 않아요.',
-              style: TextStyle(color: Color(0xFF64748B), height: 1.6),
+              style: TextStyle(color: AppTheme.textMuted, height: 1.6),
             ),
             const SizedBox(height: 18),
             for (final entry in ['타임 스튜디오', '온유 살롱'].indexed)
@@ -77,9 +77,9 @@ class SearchResults extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(22),
                   decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(22),
-                    border: Border.all(color: AppTheme.secondary),
+                    color: AppTheme.surface,
+                    borderRadius: AppTheme.corners,
+                    border: Border.all(color: AppTheme.border),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -94,7 +94,7 @@ class SearchResults extends StatelessWidget {
                       const SizedBox(height: 8),
                       Text(
                         '${search.region.label} · ${search.service.label}',
-                        style: const TextStyle(color: Color(0xFF64748B)),
+                        style: const TextStyle(color: AppTheme.textMuted),
                       ),
                       const SizedBox(height: 18),
                       Text(
@@ -107,7 +107,7 @@ class SearchResults extends StatelessWidget {
                       const SizedBox(height: 14),
                       const Text(
                         '시작 시각 예시',
-                        style: TextStyle(color: Color(0xFF64748B)),
+                        style: TextStyle(color: AppTheme.textMuted),
                       ),
                       const SizedBox(height: 8),
                       Wrap(

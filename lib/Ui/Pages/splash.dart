@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../theme/app_theme.dart';
+
 import 'login/login.dart';
 
 class SplashPage extends StatefulWidget {
@@ -37,7 +39,7 @@ class _SplashPageState extends State<SplashPage> {
     final colors = theme.colorScheme;
 
     return Scaffold(
-      backgroundColor: colors.surface,
+      backgroundColor: AppTheme.background,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -51,6 +53,8 @@ class _SplashPageState extends State<SplashPage> {
                     children: [
                       Image.asset(
                         'assets/images/timePick_logo_no_background.png',
+                        color: AppTheme.brand,
+                        colorBlendMode: BlendMode.srcIn,
                         width: 360,
                         fit: BoxFit.contain,
                         semanticLabel: '타임픽',
@@ -74,7 +78,7 @@ class _SplashPageState extends State<SplashPage> {
                   child: CircularProgressIndicator(
                     strokeWidth: 2.5,
                     color: colors.primary,
-                    backgroundColor: colors.secondary,
+                    backgroundColor: AppTheme.actionSurface,
                     semanticsLabel: '로딩 중',
                   ),
                 ),

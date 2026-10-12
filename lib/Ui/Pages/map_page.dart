@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:kakao_map_sdk/kakao_map_sdk.dart';
 
+import '../theme/app_theme.dart';
+
 class MapPage extends StatefulWidget {
   const MapPage({
     super.key,
@@ -200,7 +202,10 @@ class _MapPageState extends State<MapPage> with AutomaticKeepAliveClientMixin {
                 child: IgnorePointer(
                   child: Material(
                     color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(12),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppTheme.corners,
+                      side: BorderSide(color: AppTheme.border),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(12),
                       child: Text(_locationMessage!),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_theme.dart';
+
 enum SignupAccountType {
   customer('일반 회원', '원하는 시간에 업체를 찾고 예약해요.'),
   business('사업자 회원', '업체 정보와 서비스, 일정 및 예약을 관리해요.');
@@ -103,12 +105,12 @@ class _SignupPageState extends State<SignupPage> {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide(color: colors.secondary),
+      borderRadius: AppTheme.corners,
+      borderSide: BorderSide(color: AppTheme.borderMuted),
     );
     final decoration = InputDecoration(
       filled: true,
-      fillColor: colors.secondary.withValues(alpha: 0.25),
+      fillColor: AppTheme.surface,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
       border: border,
       enabledBorder: border,
@@ -130,6 +132,8 @@ class _SignupPageState extends State<SignupPage> {
                 alignment: Alignment.centerLeft,
                 child: Image.asset(
                   'assets/images/timePick_logo_no_background.png',
+                  color: AppTheme.brand,
+                  colorBlendMode: BlendMode.srcIn,
                   width: 168,
                   semanticLabel: '타임픽',
                 ),
@@ -140,11 +144,7 @@ class _SignupPageState extends State<SignupPage> {
                   constraints: const BoxConstraints(maxWidth: 480),
                   child: Container(
                     padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: colors.surface,
-                      border: Border.all(color: colors.secondary),
-                      borderRadius: BorderRadius.circular(24),
-                    ),
+                    decoration: AppTheme.panel(raised: true),
                     child: Form(
                       key: _formKey,
                       child: AutofillGroup(
@@ -179,7 +179,7 @@ class _SignupPageState extends State<SignupPage> {
                                         ChoiceChip(
                                           label: Text(type.label),
                                           selected: field.value == type,
-                                          selectedColor: colors.secondary,
+                                          selectedColor: AppTheme.actionSurface,
                                           onSelected: (_) =>
                                               field.didChange(type),
                                         ),
@@ -336,7 +336,7 @@ class _SignupPageState extends State<SignupPage> {
                               style: FilledButton.styleFrom(
                                 minimumSize: const Size.fromHeight(52),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: AppTheme.corners,
                                 ),
                               ),
                               child: const Text('회원가입'),

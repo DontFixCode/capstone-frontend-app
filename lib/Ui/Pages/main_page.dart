@@ -74,7 +74,7 @@ class _MainPageState extends State<MainPage>
                   ),
                   title: Text(item.label),
                   trailing: item == _search.region
-                      ? const Icon(Icons.check, color: AppTheme.primary)
+                      ? const Icon(Icons.check, color: AppTheme.action)
                       : null,
                   onTap: () => Navigator.pop(context, item),
                 ),
@@ -156,7 +156,7 @@ class _MainPageState extends State<MainPage>
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 48, color: AppTheme.primary),
+          Icon(icon, size: 48, color: AppTheme.action),
           const SizedBox(height: 20),
           Text(
             title,
@@ -167,7 +167,7 @@ class _MainPageState extends State<MainPage>
           Text(
             message,
             textAlign: TextAlign.center,
-            style: const TextStyle(color: Color(0xFF64748B), height: 1.6),
+            style: const TextStyle(color: AppTheme.textMuted, height: 1.6),
           ),
           const SizedBox(height: 24),
           TextButton(
@@ -196,7 +196,7 @@ class _MainPageState extends State<MainPage>
               child: TextButton.icon(
                 onPressed: _region,
                 style: TextButton.styleFrom(
-                  foregroundColor: const Color(0xFF64748B),
+                  foregroundColor: AppTheme.textMuted,
                   padding: EdgeInsets.zero,
                 ),
                 icon: const Icon(Icons.location_on_outlined, size: 21),
@@ -226,7 +226,7 @@ class _MainPageState extends State<MainPage>
               style: TextStyle(
                 fontSize: 16,
                 height: 1.6,
-                color: Color(0xFF64748B),
+                color: AppTheme.textMuted,
               ),
             ),
             const SizedBox(height: 30),
@@ -242,13 +242,16 @@ class _MainPageState extends State<MainPage>
             Container(
               padding: const EdgeInsets.all(22),
               decoration: BoxDecoration(
-                color: AppTheme.secondary.withValues(alpha: 0.45),
-                borderRadius: BorderRadius.circular(22),
+                color: AppTheme.brandSurface,
+                borderRadius: AppTheme.corners,
+                border: const Border(
+                  left: BorderSide(color: AppTheme.brand, width: 4),
+                ),
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.auto_awesome_outlined, color: AppTheme.primary),
+                  Icon(Icons.auto_awesome_outlined, color: AppTheme.brand),
                   SizedBox(height: 12),
                   Text(
                     '빈 시간부터 골라보세요',
@@ -257,7 +260,7 @@ class _MainPageState extends State<MainPage>
                   SizedBox(height: 8),
                   Text(
                     '날짜와 시간, 필요한 서비스를 선택하면\n내 일정에 맞춰 예약을 찾아볼 수 있어요.',
-                    style: TextStyle(height: 1.7, color: Color(0xFF64748B)),
+                    style: TextStyle(height: 1.7, color: AppTheme.textMuted),
                   ),
                 ],
               ),
@@ -275,12 +278,12 @@ class _MainPageState extends State<MainPage>
                   leading: Container(
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
-                      color: AppTheme.secondary,
-                      borderRadius: BorderRadius.circular(16),
+                      color: AppTheme.actionSurface,
+                      borderRadius: AppTheme.corners,
                     ),
                     child: const Icon(
                       Icons.storefront_outlined,
-                      color: AppTheme.primary,
+                      color: AppTheme.action,
                     ),
                   ),
                   title: Text(item.name),
@@ -301,6 +304,8 @@ class _MainPageState extends State<MainPage>
       titleSpacing: 24,
       title: Image.asset(
         'assets/images/timePick_logo_no_background.png',
+        color: AppTheme.brand,
+        colorBlendMode: BlendMode.srcIn,
         width: 112,
         height: 42,
         fit: BoxFit.contain,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_theme.dart';
+
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
 
@@ -26,8 +28,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final border = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide(color: colors.secondary),
+      borderRadius: AppTheme.corners,
+      borderSide: BorderSide(color: AppTheme.borderMuted),
     );
 
     return Scaffold(
@@ -42,6 +44,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 alignment: Alignment.centerLeft,
                 child: Image.asset(
                   'assets/images/timePick_logo_no_background.png',
+                  color: AppTheme.brand,
+                  colorBlendMode: BlendMode.srcIn,
                   width: 168,
                   semanticLabel: '타임픽',
                 ),
@@ -52,11 +56,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   constraints: const BoxConstraints(maxWidth: 480),
                   child: Container(
                     padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: colors.surface,
-                      border: Border.all(color: colors.secondary),
-                      borderRadius: BorderRadius.circular(24),
-                    ),
+                    decoration: AppTheme.panel(raised: true),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -79,9 +79,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                               labelText: '이메일',
                               hintText: 'example@email.com',
                               filled: true,
-                              fillColor: colors.secondary.withValues(
-                                alpha: 0.25,
-                              ),
+                              fillColor: AppTheme.surface,
                               contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 16,
                                 vertical: 18,
@@ -118,7 +116,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             style: FilledButton.styleFrom(
                               minimumSize: const Size.fromHeight(52),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: AppTheme.corners,
                               ),
                             ),
                             child: const Text('재설정 이메일 요청'),

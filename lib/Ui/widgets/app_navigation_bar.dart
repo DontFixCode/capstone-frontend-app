@@ -15,22 +15,22 @@ class AppNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DecoratedBox(
     decoration: const BoxDecoration(
-      border: Border(top: BorderSide(color: AppTheme.secondary)),
+      border: Border(top: BorderSide(color: AppTheme.border)),
     ),
     child: NavigationBarTheme(
       data: NavigationBarThemeData(
         iconTheme: WidgetStateProperty.resolveWith(
           (states) => IconThemeData(
             color: states.contains(WidgetState.selected)
-                ? AppTheme.primary
-                : const Color(0xFF64748B),
+                ? AppTheme.action
+                : AppTheme.textMuted,
           ),
         ),
         labelTextStyle: WidgetStateProperty.resolveWith(
           (states) => TextStyle(
             color: states.contains(WidgetState.selected)
-                ? AppTheme.primary
-                : const Color(0xFF64748B),
+                ? AppTheme.action
+                : AppTheme.textMuted,
             fontWeight: states.contains(WidgetState.selected)
                 ? FontWeight.w700
                 : FontWeight.w400,
@@ -39,9 +39,9 @@ class AppNavigationBar extends StatelessWidget {
         ),
       ),
       child: NavigationBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppTheme.surface,
         surfaceTintColor: Colors.transparent,
-        indicatorColor: AppTheme.secondary,
+        indicatorColor: AppTheme.actionSurface,
         selectedIndex: selectedIndex,
         onDestinationSelected: onDestinationSelected,
         destinations: const [

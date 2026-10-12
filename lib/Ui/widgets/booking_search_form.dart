@@ -42,7 +42,7 @@ class BookingSearchForm extends StatelessWidget {
       Text(
         label,
         style: const TextStyle(
-          color: Color(0xFF64748B),
+          color: AppTheme.textMuted,
           fontWeight: FontWeight.w600,
         ),
       ),
@@ -53,11 +53,11 @@ class BookingSearchForm extends StatelessWidget {
         child: Material(
           color: AppTheme.background,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
-            side: const BorderSide(color: AppTheme.secondary),
+            borderRadius: AppTheme.corners,
+            side: const BorderSide(color: AppTheme.border),
           ),
           child: InkWell(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: AppTheme.corners,
             onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 18),
@@ -67,7 +67,7 @@ class BookingSearchForm extends StatelessWidget {
                     child: Text(value, style: const TextStyle(fontSize: 17)),
                   ),
                   const SizedBox(width: 6),
-                  Icon(icon, size: 19, color: const Color(0xFF64748B)),
+                  Icon(icon, size: 19, color: AppTheme.textMuted),
                 ],
               ),
             ),
@@ -91,14 +91,15 @@ class BookingSearchForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.all(22),
-    decoration: BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(26),
-      border: Border.all(color: AppTheme.secondary),
-    ),
+    decoration: AppTheme.panel(raised: true),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const Text(
+          '나의 예약 조건',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+        ),
+        const Divider(),
         _field(
           context,
           '이용할 날짜',
@@ -152,7 +153,7 @@ class BookingSearchForm extends StatelessWidget {
         const Text(
           '어떤 서비스가 필요하세요?',
           style: TextStyle(
-            color: Color(0xFF64748B),
+            color: AppTheme.textMuted,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -169,10 +170,10 @@ class BookingSearchForm extends StatelessWidget {
               vertical: 16,
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(14),
-              borderSide: const BorderSide(color: AppTheme.secondary),
+              borderRadius: AppTheme.corners,
+              borderSide: const BorderSide(color: AppTheme.border),
             ),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+            border: OutlineInputBorder(borderRadius: AppTheme.corners),
           ),
           items: [
             for (final service in BookingService.values)
@@ -185,7 +186,7 @@ class BookingSearchForm extends StatelessWidget {
         const SizedBox(height: 8),
         Text(
           '예상 소요 ${search.service.minutes}분 · 업체별로 달라질 수 있어요',
-          style: const TextStyle(fontSize: 12, color: Color(0xFF64748B)),
+          style: const TextStyle(fontSize: 12, color: AppTheme.textMuted),
         ),
         const SizedBox(height: 18),
         Wrap(
@@ -203,10 +204,20 @@ class BookingSearchForm extends StatelessWidget {
                     search.start == TimeOfDay(hour: preset.$2, minute: 0) &&
                     search.end == TimeOfDay(hour: preset.$3, minute: 0),
                 showCheckmark: false,
-                selectedColor: AppTheme.secondary,
-                backgroundColor: AppTheme.background,
-                side: BorderSide.none,
-                shape: const StadiumBorder(),
+                selectedColor: AppTheme.action,
+                backgroundColor: AppTheme.surfaceMuted,
+                labelStyle: TextStyle(
+                  color:
+                      search.start == TimeOfDay(hour: preset.$2, minute: 0) &&
+                          search.end == TimeOfDay(hour: preset.$3, minute: 0)
+                      ? AppTheme.onAction
+                      : AppTheme.text,
+                  fontWeight: FontWeight.w600,
+                ),
+                side: const BorderSide(color: AppTheme.borderMuted),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppTheme.corners,
+                ),
                 padding: const EdgeInsets.symmetric(
                   horizontal: 8,
                   vertical: 10,
@@ -223,9 +234,7 @@ class BookingSearchForm extends StatelessWidget {
           onPressed: onSearch,
           style: FilledButton.styleFrom(
             minimumSize: const Size.fromHeight(60),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: AppTheme.corners),
           ),
           child: const Padding(
             padding: EdgeInsets.symmetric(vertical: 12),

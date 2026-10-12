@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/app_theme.dart';
+
 import 'forgot_password.dart';
 import '../main_page.dart';
 import 'signup.dart';
@@ -28,12 +30,12 @@ class _LoginPageState extends State<LoginPage> {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final inputBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: BorderSide(color: colors.secondary),
+      borderRadius: AppTheme.corners,
+      borderSide: BorderSide(color: AppTheme.borderMuted),
     );
     final inputDecoration = InputDecoration(
       filled: true,
-      fillColor: colors.secondary.withValues(alpha: 0.25),
+      fillColor: AppTheme.surface,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
       border: inputBorder,
       enabledBorder: inputBorder,
@@ -56,6 +58,8 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.centerLeft,
                     child: Image.asset(
                       'assets/images/timePick_logo_no_background.png',
+                      color: AppTheme.brand,
+                      colorBlendMode: BlendMode.srcIn,
                       width: 168,
                       semanticLabel: '타임픽',
                     ),
@@ -67,11 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 480),
                       child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          color: colors.surface,
-                          border: Border.all(color: colors.secondary),
-                          borderRadius: BorderRadius.circular(24),
-                        ),
+                        decoration: AppTheme.panel(raised: true),
                         child: Padding(
                           padding: const EdgeInsets.all(24),
                           child: Form(
@@ -162,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                                     style: FilledButton.styleFrom(
                                       minimumSize: const Size.fromHeight(52),
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
+                                        borderRadius: AppTheme.corners,
                                       ),
                                     ),
                                     child: const Text('로그인'),
